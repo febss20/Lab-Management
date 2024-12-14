@@ -1,0 +1,11 @@
+meta {
+  name: getAslabByLab
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}/aslab
+  body: none
+  auth: none
+}

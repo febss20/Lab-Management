@@ -1,0 +1,20 @@
+meta {
+  name: addEquipment2
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:{{PORT}}/equipment/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "equipment_name": "Computer",
+    "condition": "Excellent",
+    "lab_id": "{{lab1Id}}",
+    "description": "Computer Asus dengan spek AMD Mewing 6900xnxx"
+  }
+}

@@ -1,0 +1,11 @@
+meta {
+  name: getLabById
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}
+  body: none
+  auth: none
+}

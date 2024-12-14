@@ -1,0 +1,18 @@
+meta {
+  name: putTest
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:{{PORT}}/test/675313868952ab553fd2833a
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "item": "Updated",
+    "price": 69
+  }
+}

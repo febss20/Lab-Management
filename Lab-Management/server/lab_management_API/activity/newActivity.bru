@@ -1,0 +1,30 @@
+meta {
+  name: newActivity
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:{{PORT}}/activity/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "lab_id": "{{lab1Id}}",
+    "activity_name": "Bagaimana seorang sigma hidup dan dilahirkan",
+    "activity_type": "Research",
+    "user": {
+      "user_nim_nip": "12030123941",
+      "user_name": "Sang Sigma",
+      "participant_count": 20
+    },
+      "start_time": "2024-12-10T08:00:00Z",
+      "end_time": "2024-12-10T12:00:00Z",
+      "equipment_used": [{
+          "equipment_id": "67559face19bd6044ec9300a",
+          "condition_after_use": "Good"
+      }]
+  }
+}

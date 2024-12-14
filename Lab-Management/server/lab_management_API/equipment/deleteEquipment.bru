@@ -1,0 +1,11 @@
+meta {
+  name: deleteEquipment
+  type: http
+  seq: 7
+}
+
+delete {
+  url: http://localhost:{{PORT}}/equipment/{{equipmentId1}}
+  body: none
+  auth: none
+}

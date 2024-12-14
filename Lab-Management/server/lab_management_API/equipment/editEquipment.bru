@@ -1,0 +1,18 @@
+meta {
+  name: editEquipment
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:{{PORT}}/equipment/{{equipmentId1}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "last_used": "2024-12-10T00:00:00Z"
+  }
+  
+}

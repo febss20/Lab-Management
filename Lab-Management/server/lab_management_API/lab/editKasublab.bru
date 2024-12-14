@@ -1,0 +1,19 @@
+meta {
+  name: editKasublab
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}/kasublab
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Sigma Hitam",
+    "email": "sigma@edu.unesa.ac.id",
+    "department": "Teknik Informatika"
+  }
+}

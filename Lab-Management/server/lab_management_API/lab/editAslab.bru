@@ -1,0 +1,19 @@
+meta {
+  name: editAslab
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}/aslab/{{aslabNim2}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Rizky Sigma Anjay",
+    "email": "sigmaTheSigma@mhs.unesa.ac.id",
+    "major": "Teknik Informatika"
+  }
+}

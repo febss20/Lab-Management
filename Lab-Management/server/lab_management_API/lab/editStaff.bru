@@ -1,0 +1,18 @@
+meta {
+  name: editStaff
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}/staff
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Budiono Sigma Siregar",
+    "contact": "09123911231"
+  }
+}

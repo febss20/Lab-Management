@@ -1,0 +1,22 @@
+meta {
+  name: addAslab
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:{{PORT}}/lab/{{lab1Id}}/aslab
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Rizky Sigma",
+    "email": "sigma@mhs.unesa.ac.id",
+    "major": "Informatika",
+    "semester": 9,
+    "contact": "08213912041",
+    "nim": "20291231412"
+  }
+}

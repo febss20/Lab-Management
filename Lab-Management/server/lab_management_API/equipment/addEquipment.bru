@@ -1,0 +1,23 @@
+meta {
+  name: addEquipment
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:{{PORT}}/equipment/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "equipment_name": "Computer",
+    "condition": "Critical",
+    "lab_id": "{{lab1Id}}",
+    "last_used": "2024-12-01T00:00:00Z",
+    "first_added": "1945-08-17T08:00:00Z",
+    "last_maintanance": "2000-12-10T08:00:00Z",
+    "description": "Computer IBM dengan RAM 1B"
+  }
+}
