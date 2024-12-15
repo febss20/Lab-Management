@@ -6,8 +6,8 @@ const LabDetail = () => {
     const { labId } = useParams();
     const [lab, setLab] = useState(null);
     const [error, setError] = useState('');
-    const [editingEntity, setEditingEntity] = useState(null); // State to manage the entity being edited
-    const [formData, setFormData] = useState({}); // State for form data
+    const [editingEntity, setEditingEntity] = useState(null); 
+    const [formData, setFormData] = useState({}); 
     const [isAdding, setIsAdding] = useState(false);
     const navigate = useNavigate();
 
