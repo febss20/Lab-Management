@@ -9,9 +9,9 @@ import equipmentRouter from './routes/equipmentRoutes.js';
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3001', // Ganti dengan URL frontend Anda
+    origin: 'http://localhost:3001', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true // Jika Anda perlu mengizinkan cookies
+    credentials: true 
 }));
 app.use(express.json());
 
