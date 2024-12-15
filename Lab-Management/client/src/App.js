@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import EquipmentList from './components/EquipmentList.js';
-import EquipmentForm from './components/EquipmentForm.js';
-import ActivityList from './components/ActivityList.js';
-import ActivityForm from './components/ActivityForm.js';
-import LabList from './components/LabList.js';
-import LabDetail from './components/LabDetail.js';
-import LabForm from './components/LabForm.js';
-import './App.css';
+import EquipmentList from './components/Equipment/EquipmentList.js';
+import EquipmentForm from './components/Equipment/EquipmentForm.js';
+import ActivityList from './components/Activity/ActivityList.js';
+import ActivityForm from './components/Activity/ActivityForm.js';
+import LabList from './components/Lab/LabList.js';
+import LabDetail from './components/Lab/LabDetail.js';
+import LabForm from './components/Lab/LabForm.js';
+import './styles/App.css';
 
 const App = () => {
     return (
