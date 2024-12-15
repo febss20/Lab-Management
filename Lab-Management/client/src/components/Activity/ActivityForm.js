@@ -2,31 +2,36 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ActivityForm = () => {
-    const [labId, setLabId] = useState('');
-    const [activityName, setActivityName] = useState('');
-    const [activityType, setActivityType] = useState('Research');
-    const [userNimNip, setUserNimNip] = useState('');
-    const [userName, setUserName] = useState('');
-    const [participantCount, setParticipantCount] = useState(1);
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [equipmentUsed, setEquipmentUsed] = useState([{ equipment_id: '', conditionAfterUse: 'Excellent' }]);
+    const [formData, setFormData] = useState({
+        labId: '',
+        activityName: '',
+        activityType: 'Research',
+        userNimNip: '',
+        userName: '',
+        participantCount: 1,
+        startTime: '',
+        endTime: '',
+        equipmentUsed: [{ equipment_id: '', conditionAfterUse: 'Excellent' }],
+    });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
     const handleEquipmentChange = (index, field, value) => {
-        const newEquipmentUsed = [...equipmentUsed];
-        if (field === 'equipment_id') {
-            const equipment_id = value.toString(); 
-            newEquipmentUsed[index]['equipment_id'] = equipment_id;
-        } else {
-            newEquipmentUsed[index][field] = value;
-        }
-        setEquipmentUsed(newEquipmentUsed);
+        const newEquipmentUsed = [...formData.equipmentUsed];
+        newEquipmentUsed[index][field] = value;
+        setFormData((prevData) => ({ ...prevData, equipmentUsed: newEquipmentUsed }));
     };
 
     const addEquipmentField = () => {
-        setEquipmentUsed([...equipmentUsed, { equipment_id: '', conditionAfterUse: 'Excellent' }]);
+        setFormData((prevData) => ({
+            ...prevData,
+            equipmentUsed: [...prevData.equipmentUsed, { equipment_id: '', conditionAfterUse: 'Excellent' }],
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -34,10 +39,9 @@ const ActivityForm = () => {
         setError('');
         setSuccess('');
 
-        // Validasi equipment_used
-        const equipmentUsedValid = equipmentUsed.every((equipment) => equipment.equipment_id !== '');
+        const { equipmentUsed, labId, activityName, activityType, userNimNip, userName, participantCount, startTime, endTime } = formData;
 
-        if (!equipmentUsedValid) {
+        if (!equipmentUsed.every((equipment) => equipment.equipment_id)) {
             setError('Failed to add activity: Equipment ID is required');
             return;
         }
@@ -53,34 +57,28 @@ const ActivityForm = () => {
             },
             start_time: startTime,
             end_time: endTime,
-            equipment_used: equipmentUsed.map(equipment => ({
-            equipment_id: equipment.equipment_id, // Ubah di sini
-            condition_after_use: equipment.conditionAfterUse,
+            equipment_used: equipmentUsed.map(({ equipment_id, conditionAfterUse }) => ({
+                equipment_id,
+                condition_after_use: conditionAfterUse,
             })),
         };
 
-        console.log('Equipment Used:', activityData.equipment_used); // tambahkan ini
-
-        try { 
+        try {
             await axios.post('http://localhost:3000/activity', activityData);
             setSuccess('Activity added successfully!');
-            // Reset form fields
-            setLabId('');
-            setActivityName('');
-            setActivityType('Research');
-            setUserNimNip('');
-            setUserName('');
-            setParticipantCount(1);
-            setStartTime('');
-            setEndTime('');
-            setEquipmentUsed([{ equipment_id: '', conditionAfterUse: 'Excellent' }]);
+            setFormData({
+                labId: '',
+                activityName: '',
+                activityType: 'Research',
+                userNimNip: '',
+                userName: '',
+                participantCount: 1,
+                startTime: '',
+                endTime: '',
+                equipmentUsed: [{ equipment_id: '', conditionAfterUse: 'Excellent' }],
+            });
         } catch (error) {
-            console.error('Error:', error);
-            if (error.response) {
-                setError('Failed to add activity: ' + error.response.data.message);
-            } else {
-                setError('Failed to add activity: ' + error.message);
-            }
+            setError(error.response ? `Failed to add activity: ${error.response.data.message}` : `Failed to add activity: ${error.message}`);
         }
     };
 
@@ -88,76 +86,79 @@ const ActivityForm = () => {
         <div>
             <h2>Add Activity</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Lab ID:</label>
-                    <input type="text" value={labId} onChange={(e) => setLabId(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Activity Name:</label>
-                    <input type="text" value={activityName} onChange={(e) => setActivityName(e.target.value)} required />
-                </div>
+                {['labId', 'activityName', 'userNimNip', 'userName'].map((field) => (
+                    <div key={field}>
+                        <label>{field.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:</label>
+                        <input
+                            type="text"
+                            name={field}
+                            value={formData[field]}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                ))}
                 <div>
                     <label>Activity Type:</label>
-                    <select value={activityType} onChange={(e) => setActivityType(e.target.value)} required>
-                        <option value="Research">Research</option>
-                        <option value="Publication">Publication</option>
-                        <option value="Training">Training</option>
-                        <option value="Final Project">Final Project</option>
+                    <select name="activityType" value={formData.activityType} onChange={handleChange} required>
+                        {['Research', 'Publication', 'Training', 'Final Project'].map((type) => (
+                            <option key={type} value={type}>{type}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
-                    <label>User NIM/NIP:</label>
-                    <input type="text" value={userNimNip} onChange={(e) => setUserNimNip(e.target.value)} required />
-                </div>
-                <div>
-                    <label>User Name:</label>
-                    <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} required />
-                </div>
-                <div>
                     <label>Participant Count:</label>
-                    <input type="number" value={participantCount} onChange={(e) => setParticipantCount(e.target.value)} required />
+                    <input
+                        type="number"
+                        name="participantCount"
+                        value={formData.participantCount}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-                <div>
-                    <label>Start Time:</label>
-                    <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-                </div>
-                <div>
-                    <label>End Time:</label>
-                    <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
-                </div>
-                <div>
-                    <h3>Equipment Used</h3>
-                    {equipmentUsed.map((equipment, index) => (
-                        <div key={index}>
-                                                        <label>Equipment ID:</label>
-                            <input
-                                type="text"
-                                value={equipment.equipment_id}
-                                onChange={(e) => handleEquipmentChange(index, 'equipment_id', e.target.value)}
-                                required
+                {['startTime', 'endTime'].map((timeField) => (
+                    <div key={timeField}>
+                        <label>{timeField.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:</label>
+                        <input
+                            type="datetime-local"
+                            name={timeField}
+                            value={formData[timeField]}
+                            onChange={handleChange}
+                            required
                             />
-                            <label>Condition After Use:</label>
-                            <select
-                                value={equipment.conditionAfterUse}
-                                onChange={(e) => handleEquipmentChange(index, 'conditionAfterUse', e.target.value)}
-                                required
-                            >
-                                <option value="Excellent">Excellent</option>
-                                <option value="Good">Good</option>
-                                <option value="Fair">Fair</option>
-                                <option value="Poor">Poor</option>
-                                <option value="Critical">Critical</option>
-                            </select>
+                            </div>
+                        ))}
+                        <div>
+                            <h3>Equipment Used</h3>
+                            {formData.equipmentUsed.map((equipment, index) => (
+                                <div key={index}>
+                                    <label>Equipment ID:</label>
+                                    <input
+                                        type="text"
+                                        value={equipment.equipment_id}
+                                        onChange={(e) => handleEquipmentChange(index, 'equipment_id', e.target.value)}
+                                        required
+                                    />
+                                    <label>Condition After Use:</label>
+                                    <select
+                                        value={equipment.conditionAfterUse}
+                                        onChange={(e) => handleEquipmentChange(index, 'conditionAfterUse', e.target.value)}
+                                        required
+                                    >
+                                        {['Excellent', 'Good', 'Fair', 'Poor', 'Critical'].map((condition) => (
+                                            <option key={condition} value={condition}>{condition}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ))}
+                            <button type="button" onClick={addEquipmentField}>Add Equipment</button>
                         </div>
-                    ))}
-                    <button type="button" onClick={addEquipmentField}>Add Equipment</button>
+                        <button type="submit">Add Activity</button>
+                    </form>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {success && <p style={{ color: 'green' }}>{success}</p>}
                 </div>
-                <button type="submit">Add Activity</button>
-            </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
-        </div>
-    );
-};
-
-export default ActivityForm;
+            );
+        };
+        
+        export default ActivityForm;

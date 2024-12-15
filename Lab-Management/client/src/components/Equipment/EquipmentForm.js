@@ -2,32 +2,34 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const EquipmentForm = () => {
-    const [equipmentName, setEquipmentName] = useState('');
-    const [condition, setCondition] = useState('Excellent');
-    const [labId, setLabId] = useState('');
-    const [description, setDescription] = useState('');
+    const [formData, setFormData] = useState({
+        equipmentName: '',
+        condition: 'Excellent',
+        labId: '',
+        description: '',
+    });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
 
-        const equipmentData = {
-            equipment_name: equipmentName,
-            condition,
-            lab_id: labId,
-            description,
-        };
-
         try {
-            await axios.post('http://localhost:3000/equipment', equipmentData);
+            await axios.post('http://localhost:3000/equipment', formData);
             setSuccess('Equipment added successfully!');
-            setEquipmentName('');
-            setCondition('Excellent');
-            setLabId('');
-            setDescription('');
+            setFormData({
+                equipmentName: '',
+                condition: 'Excellent',
+                labId: '',
+                description: '',
+            });
         } catch (error) {
             const errorMessage = error.response ? error.response.data.message : 'An unexpected error occurred';
             setError('Failed to add equipment: ' + errorMessage);
@@ -40,25 +42,45 @@ const EquipmentForm = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Equipment Name:</label>
-                    <input type="text" value={equipmentName} onChange={(e) => setEquipmentName(e.target.value)} required />
+                    <input
+                        type="text"
+                        name="equipmentName"
+                        value={formData.equipmentName}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
                     <label>Condition:</label>
-                    <select value={condition} onChange={(e) => setCondition(e.target.value)} required>
-                        <option value="Excellent">Excellent</option>
-                        <option value="Good">Good</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Poor">Poor</option>
-                        <option value="Critical">Critical</option>
+                    <select
+                        name="condition"
+                        value={formData.condition}
+                        onChange={handleChange}
+                        required
+                    >
+                        {['Excellent', 'Good', 'Fair', 'Poor', 'Critical'].map((condition) => (
+                            <option key={condition} value={condition}>{condition}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
                     <label>Lab ID:</label>
-                    <input type="text" value={labId} onChange={(e) => setLabId(e.target.value)} required />
+                    <input
+                        type="text"
+                        name="labId"
+                        value={formData.labId}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
                     <label>Description:</label>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <button type="submit">Add Equipment</button>
             </form>

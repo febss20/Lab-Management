@@ -12,7 +12,7 @@ const EquipmentList = () => {
     try {
       const response = await axios.get('http://localhost:3000/equipment');
       if (response.data.message === "Data fetch successfull") {
-        setEquipments(response.data.data); 
+        setEquipments(response.data.data);
       } else {
         setError('Failed to fetch equipments: ' + response.data.message);
       }
@@ -30,7 +30,7 @@ const EquipmentList = () => {
     if (window.confirm('Are you sure you want to delete this equipment?')) {
       try {
         await axios.delete(`http://localhost:3000/equipment/${id}`);
-        fetchEquipments(); 
+        fetchEquipments();
       } catch (error) {
         setError('Failed to delete equipment: ' + error.message);
       }
@@ -39,7 +39,7 @@ const EquipmentList = () => {
 
   // Start editing
   const handleEdit = (equipment) => {
-    setEditingId(equipment._id); 
+    setEditingId(equipment._id);
     setEditData({ ...equipment });
   };
 
@@ -53,6 +53,59 @@ const EquipmentList = () => {
     } catch (error) {
       setError('Failed to update equipment: ' + error.message);
     }
+  };
+
+  const renderEquipmentRow = (equipment) => {
+    return editingId === equipment._id ? (
+      <>
+        <td className="px-4 py-2 border">
+          <input
+            type="text"
+            value={editData.equipment_name}
+            onChange={e => setEditData({ ...editData, equipment_name: e.target.value })}
+            className="w-full p-1 border rounded"
+          />
+        </td>
+        <td className="px-4 py-2 border">
+          <select
+            value={editData.condition}
+            onChange={e => setEditData({ ...editData, condition: e.target.value })}
+            className="w-full p-1 border rounded"
+          >
+            {['Excellent', 'Good', 'Fair', 'Poor', 'Critical'].map(condition => (
+              <option key={condition} value={condition}>{condition}</option>
+            ))}
+          </select>
+        </td>
+        {['lab_id', 'last_used', 'first_added', 'last_maintanance'].map((field, index) => (
+          <td className="px-4 py-2 border" key={index}>
+            <input
+              type={field.includes('used') || field.includes('added') ? 'date' : 'text'}
+              value={editData[field]}
+              onChange={e => setEditData({ ...editData, [field]: e.target.value })}
+              className="w-full p-1 border rounded"
+            />
+          </td>
+        ))}
+        <td className="px-4 py-2 border">
+          <button onClick={handleUpdate} className="bg-green-500 text-white px-2 py-1 rounded mr-2">Save</button>
+          <button onClick={() => { setEditingId(null); setEditData(null); }} className="cancel-btn bg-gray-500 text-white px-2 py-1 rounded">Cancel</button>
+        </td>
+      </>
+    ) : (
+      <>
+        <td className="px-4 py-2 border">{equipment.equipment_name}</td>
+        <td className="px-4 py-2 border">{equipment.condition}</td>
+        <td className="px-4 py-2 border">{equipment.lab_id}</td>
+        <td className="px-4 py-2 border">{equipment.last_used}</td>
+        <td className="px-4 py-2 border">{equipment.first_added}</td>
+        <td className="px-4 py-2 border">{equipment.last_maintanance}</td>
+        <td className="px-4 py-2 border">
+          <button onClick={() => handleEdit(equipment)} className="edit-btn px-2 py-1 rounded mr-2">Edit</button>
+          <button onClick={() => handleDelete(equipment._id)} className="delete-btn px-2 py-1 rounded">Delete</button>
+        </td>
+      </>
+    );
   };
 
   return (
@@ -76,105 +129,7 @@ const EquipmentList = () => {
           <tbody>
             {equipments.map(equipment => (
               <tr key={equipment._id}>
-                {editingId === equipment._id ? (
-                  // Edit mode
-                  <>
-                    <td className="px-4 py-2 border">
-                      <input
-                        type="text"
-                        value={editData.equipment_name}
-                        onChange={e => setEditData({...editData, equipment_name: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <select
-                        value={editData.condition}
-                        onChange={e => setEditData({...editData, condition: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      >
-                        <option value="Excellent">Excellent</option>
-                        <option value="Good">Good</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Poor">Poor</option>
-                        <option value="Critical">Critical</option>
-                      </select>
-                    </td>
-                    <td className="px-4 py-2 border">
-                    <input
-                        type="text"
-                        value={editData.lab_id}
-                        onChange={e => setEditData({...editData, lab_id: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <input
-                        type="date"
-                        value={editData.last_used}
-                        onChange={e => setEditData({...editData, last_used: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <input
-                        type="date"
-                        value={editData.first_added}
-                        onChange={e => setEditData({...editData, first_added: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <input
-                        type="date"
-                        value={editData.last_maintanance}
-                        onChange={e => setEditData({...editData, last_maintanance: e.target.value})}
-                        className="w-full p-1 border rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-2 border">
-                      <button
-                        onClick={handleUpdate}
-                        className="bg-green-500 text-white px-2 py-1 rounded mr-2"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => {
-                          setEditingId(null);
-                          setEditData(null);
-                        }}
-                        className="cancel-btn bg-gray-500 text-white px-2 py-1 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </td>
-                  </>
-                ) : (
-                  // View mode
-                  <>
-                    <td className="px-4 py-2 border">{equipment.equipment_name}</td>
-                    <td className="px-4 py-2 border">{equipment.condition}</td>
-                    <td className="px-4 py-2 border">{equipment.lab_id}</td>
-                    <td className="px-4 py-2 border">{equipment.last_used}</td>
-                    <td className="px-4 py-2 border">{equipment.first_added}</td>
-                    <td className="px-4 py-2 border">{equipment.last_maintanance}</td>
-                    <td className="px-4 py-2 border">
-                      <button
-                        onClick={() => handleEdit(equipment)}
-                        className="edit-btn px-2 py-1 rounded mr-2"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(equipment._id)} 
-                        className="delete-btn px-2 py-1 rounded"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </>
-                )}
+                {renderEquipmentRow(equipment)}
               </tr>
             ))}
           </tbody>

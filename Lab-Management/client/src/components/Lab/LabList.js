@@ -38,26 +38,32 @@ const LabList = () => {
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="px-4 py-2 border">Lab ID</th>
-                            <th className="px-4 py-2 border">Lab Name</th>
-                            <th className="px-4 py-2 border">Actions</th>
+                            {['Lab ID', 'Lab Name', 'Actions'].map((header) => (
+                                <th key={header} className="px-4 py-2 border">{header}</th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>
-                        {labs.map(lab => (
-                            <tr key={lab.lab_id}>
-                                <td className="px-4 py-2 border">{lab.lab_id}</td>
-                                <td className="px-4 py-2 border">{lab.lab_name}</td>
-                                <td className="px-4 py-2 border">
-                                    <button
-                                        onClick={() => handleInfoClick(lab.lab_id)}
-                                        className="edit-btn px-2 py-1 rounded"
-                                    >
-                                        Info
-                                    </button>
-                                </td>
+                        {labs.length > 0 ? (
+                            labs.map(lab => (
+                                <tr key={lab.lab_id}>
+                                    <td className="px-4 py-2 border">{lab.lab_id}</td>
+                                    <td className="px-4 py-2 border">{lab.lab_name}</td>
+                                    <td className="px-4 py-2 border">
+                                        <button
+                                            onClick={() => handleInfoClick(lab.lab_id)}
+                                            className="edit-btn px-2 py-1 rounded"
+                                        >
+                                            Info
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="3" className="text-center py-2">No labs available</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
