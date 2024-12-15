@@ -6,8 +6,13 @@ const LabDetail = () => {
     const { labId } = useParams();
     const [lab, setLab] = useState(null);
     const [error, setError] = useState('');
+<<<<<<< HEAD
     const [editingEntity, setEditingEntity] = useState(null);
     const [formData, setFormData] = useState({});
+=======
+    const [editingEntity, setEditingEntity] = useState(null); 
+    const [formData, setFormData] = useState({}); 
+>>>>>>> ad6dd34dd3999b01c0c947f7592ec1b4f2f66bcb
     const [isAdding, setIsAdding] = useState(false);
     const navigate = useNavigate();
 
