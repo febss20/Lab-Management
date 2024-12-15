@@ -21,8 +21,15 @@ const EquipmentForm = () => {
         setError('');
         setSuccess('');
 
+        const equipmentData = {
+            equipment_name: formData.equipmentName,
+            condition: formData.condition,
+            lab_id: formData.labId,
+            description: formData.description,
+        };
+
         try {
-            await axios.post('http://localhost:3000/equipment', formData);
+            await axios.post('http://localhost:3000/equipment', equipmentData);
             setSuccess('Equipment added successfully!');
             setFormData({
                 equipmentName: '',
