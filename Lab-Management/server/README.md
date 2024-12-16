@@ -1,3 +1,3 @@
-# Sc of this Repo 
+# Sc of this Repo
 
 https://github.com/aLieexe/lab_management_backend.git
