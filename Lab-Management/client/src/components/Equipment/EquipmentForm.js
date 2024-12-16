@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EquipmentForm = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ const EquipmentForm = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -21,8 +24,15 @@ const EquipmentForm = () => {
         setError('');
         setSuccess('');
 
+        const equipmentData = {
+            equipment_name: formData.equipmentName,
+            condition: formData.condition,
+            lab_id: formData.labId,
+            description: formData.description,
+        };
+
         try {
-            await axios.post('http://localhost:3000/equipment', formData);
+            await axios.post('http://localhost:3000/equipment', equipmentData);
             setSuccess('Equipment added successfully!');
             setFormData({
                 equipmentName: '',
@@ -37,8 +47,8 @@ const EquipmentForm = () => {
     };
 
     return (
-        <div>
-            <h2>Add Equipment</h2>
+        <div className="add-form">
+            <h2 className="h2-txt">Add Equipment</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Equipment Name:</label>
@@ -84,6 +94,7 @@ const EquipmentForm = () => {
                 </div>
                 <button type="submit">Add Equipment</button>
             </form>
+            <button onClick={() => navigate(-1)} className="delete-btn px-4 py-2 rounded">Back</button>
             {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
             {success && <p className="success-message" style={{ color: 'green' }}>{success}</p>}
         </div>

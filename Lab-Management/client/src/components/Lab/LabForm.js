@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LabForm = () => {
     const [labId, setLabId] = useState('');
@@ -9,6 +10,8 @@ const LabForm = () => {
     const [labKasublab, setLabKasublab] = useState({ name: '', email: '', department: '' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const navigate = useNavigate();
 
     const handleChange = (setter) => (field) => (value) => {
         setter((prev) => ({ ...prev, [field]: value }));
@@ -46,8 +49,8 @@ const LabForm = () => {
     };
 
     return (
-        <div>
-            <h2>Add Lab</h2>
+        <div className="add-form">
+            <h2 className="h2-txt">Add Lab</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Lab ID:</label>
@@ -101,6 +104,7 @@ const LabForm = () => {
                 </div>
                 <button type="submit">Add Lab</button>
             </form>
+            <button onClick={() => navigate(-1)} className="delete-btn px-4 py-2 rounded">Back</button>
             {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
             {success && <p className="success-message" style={{ color: 'green' }}>{success}</p>}
         </div>

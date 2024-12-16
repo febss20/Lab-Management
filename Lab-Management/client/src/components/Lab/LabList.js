@@ -32,6 +32,7 @@ const LabList = () => {
     return (
         <div className="container mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">Lab List</h2>
+            <button onClick={() => navigate('/lab')} className="add-list-btn bg-blue-500 text-white px-4 py-2 rounded mb-4">Add Lab</button>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             
             <div className="lab-list">

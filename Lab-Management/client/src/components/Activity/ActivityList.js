@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const ActivityList = () => {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch activities
   const fetchActivities = async () => {
@@ -118,7 +120,7 @@ const ActivityList = () => {
         </td>
         <td className="px-4 py-2 border">
           <button onClick={handleUpdate} className="bg-green-500 text-white px-2 py-1 rounded mr-2">Save</button>
-          <button onClick={() => { setEditingId(null); setEditData(null); }} className="cancel-btn bg-gray-500 text-white px -2 py-1 rounded">Cancel</button>
+          <button onClick={() => { setEditingId(null); setEditData(null); }} className="cancel-btn bg-gray-500 text-white px-2 py-1 rounded">Cancel</button>
         </td>
       </>
     ) : (
@@ -141,6 +143,7 @@ const ActivityList = () => {
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Activities List</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
+      <button onClick={() => navigate('/activitie')} className="add-list-btn bg-blue-500 text-white px-4 py-2 rounded mb-4">Add Activity</button>
       <div className="activity-list">
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
@@ -148,7 +151,7 @@ const ActivityList = () => {
               <th className="px-4 py-2 border">Lab ID</th>
               <th className="px-4 py-2 border">Activity Name</th>
               <th className="px-4 py-2 border">Type</th>
-              <th className="px-4 py-2 border">User </th>
+              <th className="px-4 py-2 border">User  </th>
               <th className="px-4 py-2 border">Start Time</th>
               <th className="px-4 py-2 border">End Time</th>
               <th className="px-4 py-2 border">Actions</th>
@@ -164,7 +167,7 @@ const ActivityList = () => {
             ) : (
               <tr>
                 <td colSpan="7" className="text-center">No activities found.</td>
-              </tr>
+              </ tr>
             )}
           </tbody>
         </table>

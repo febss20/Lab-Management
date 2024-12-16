@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EquipmentList = () => {
   const [equipments, setEquipments] = useState([]);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState(null);
+
+  const navigate = useNavigate();
 
   // Fetch equipments
   const fetchEquipments = async () => {
@@ -111,6 +114,7 @@ const EquipmentList = () => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Equipment List</h2>
+      <button onClick={() => navigate('/equipment')} className="add-list-btn bg-blue-500 text-white px-4 py-2 rounded mb-4">Add Equipment</button>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       
       <div className="equipment-list">

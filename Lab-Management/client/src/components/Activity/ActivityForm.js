@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ActivityForm = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const ActivityForm = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -83,8 +85,8 @@ const ActivityForm = () => {
     };
 
     return (
-        <div>
-            <h2>Add Activity</h2>
+        <div className="add-form">
+            <h2 className="h2-txt">Add Activity</h2>
             <form onSubmit={handleSubmit}>
                 {['labId', 'activityName', 'userNimNip', 'userName'].map((field) => (
                     <div key={field}>
@@ -155,6 +157,7 @@ const ActivityForm = () => {
                         </div>
                         <button type="submit">Add Activity</button>
                     </form>
+                    <button onClick={() => navigate(-1)} className="delete-btn px-4 py-2 rounded">Back</button>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     {success && <p style={{ color: 'green' }}>{success}</p>}
                 </div>
