@@ -17,12 +17,9 @@ const App = () => {
                     <h1>Lab Management System</h1>
                     <nav>
                         <ul>
-                            <li><Link to="/lab">Lab Form</Link></li>
-                            <li><Link to="/activitie">Activity Form</Link></li>
-                            <li><Link to="/equipment">Equipment Form</Link></li>
-                            <li><Link to="/labs">Lab List</Link></li>
-                            <li><Link to="/activities">Activity List</Link></li>
-                            <li><Link to="/equipments">Equipment List</Link></li>
+                            <li><Link to="/labs">Laboratory</Link></li>
+                            <li><Link to="/activities">Activity</Link></li>
+                            <li><Link to="/equipments">Equipment</Link></li>
                         </ul>
                     </nav>
                 </aside>
