@@ -7,7 +7,7 @@ const LabForm = () => {
     const [labName, setLabName] = useState('');
     const [labAslab, setLabAslab] = useState({ name: '', email: '', major: '', semester: '', contact: '', nim: '' });
     const [labStaff, setLabStaff] = useState({ name: '', contact: '' });
-    const [labKasublab, setLabKasublab] = useState({ name: '', email: '', department: '' });
+    const [labKasublab, setLabKasublab] = useState({ name: '', email: '', department: '', contact: '', nip: '' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -45,7 +45,7 @@ const LabForm = () => {
         setLabName('');
         setLabAslab({ name: '', email: '', major: '', semester: '', contact: '', nim: '' });
         setLabStaff({ name: '', contact: '' });
-        setLabKasublab({ name: '', email: '', department: '' });
+        setLabKasublab({ name: '', email: '', department: '', contact: '', nip: '' });
     };
 
     return (
@@ -90,7 +90,7 @@ const LabForm = () => {
                 </div>
                 <div>
                     <h3>Lab Kasublab</h3>
-                    {['name', 'email', 'department'].map((field) => (
+                    {['name', 'email', 'department', 'contact', 'nip'].map((field) => (
                         <div key={field}>
                             <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
                             <input

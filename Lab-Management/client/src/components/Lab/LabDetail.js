@@ -44,14 +44,16 @@ const LabDetail = () => {
     // Handle Add/Edit Aslab, Staff, Kasublab
     const handleAddOrEdit = (entity, data = {}) => {
         setEditingEntity(entity);
-        setIsAdding(!data.nim); // Determine if adding or editing
+        setIsAdding(!data.nim); 
         setFormData({
             name: data.name || '',
             contact: data.contact || '',
             email: data.email || '',
             major: data.major || '',
             semester: data.semester || '',
-            nim: data.nim || ''
+            nim: data.nim || '',
+            department: data.department || '',
+            nip: data.nip || '' 
         });
     };
 
@@ -110,7 +112,7 @@ const LabDetail = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {lab.lab_aslab.length > 0 ? (
+                            { lab.lab_aslab.length > 0 ? (
                                 lab.lab_aslab.map(aslab => (
                                     <tr key={aslab.nim} className="border-b">
                                         <td>{aslab.name}</td>
@@ -166,6 +168,8 @@ const LabDetail = () => {
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Department</th>
+                                <th>Contact</th> 
+                                <th>NIP</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -175,13 +179,15 @@ const LabDetail = () => {
                                     <td>{lab.lab_kasublab.name}</td>
                                     <td>{lab.lab_kasublab.email}</td>
                                     <td>{lab.lab_kasublab.department}</td>
+                                    <td>{lab.lab_kasublab.contact}</td>
+                                    <td>{lab.lab_kasublab.nip}</td> 
                                     <td className="action-buttons">
                                         <button onClick={() => handleAddOrEdit('kasublab', lab.lab_kasublab)} className="edit-btn px-2 py-1 rounded">Edit</button>
                                     </td>
                                 </tr>
                             ) : (
                                 <tr>
-                                    <td colSpan="4">Tidak ada Kasublab</td>
+                                    <td colSpan="6">Tidak ada Kasublab</td>
                                 </tr>
                             )}
                         </tbody>
@@ -213,7 +219,15 @@ const LabDetail = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label>Department:</label>
-                                                <input type="text" name="department" value={formData.department} onChange={handleChange} required />
+                                                <input type="text " name="department" value={formData.department} onChange={handleChange} required />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Contact:</label>
+                                                <input type="text" name="contact" value={formData.contact} onChange={handleChange} required />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>NIP:</label>
+                                                <input type="text" name="nip" value={formData.nip} onChange={handleChange} required />
                                             </div>
                                         </>
                                     )}
@@ -229,7 +243,7 @@ const LabDetail = () => {
                                             </div>
                                             <div className="form-group">
                                                 <label>Major:</label>
-                                                < input type="text" name="major" value={formData.major} onChange={handleChange} required />
+                                                <input type="text" name="major" value={formData.major} onChange={handleChange} required />
                                             </div>
                                             <div className="form-group">
                                                 <label>Semester:</label>
