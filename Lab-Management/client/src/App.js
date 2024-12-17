@@ -4,6 +4,7 @@ import EquipmentList from './components/Equipment/EquipmentList.js';
 import EquipmentForm from './components/Equipment/EquipmentForm.js';
 import ActivityList from './components/Activity/ActivityList.js';
 import ActivityForm from './components/Activity/ActivityForm.js';
+import ActivityDetail from './components/Activity/ActivityDetail.js';
 import LabList from './components/Lab/LabList.js';
 import LabDetail from './components/Lab/LabDetail.js';
 import LabForm from './components/Lab/LabForm.js';
@@ -32,6 +33,7 @@ const App = () => {
                         <Route path="/activities" element={<ActivityList />} />
                         <Route path="/equipments" element={<EquipmentList />} />
                         <Route path="/lab/:labId" element={<LabDetail />} />
+                        <Route path="/activity/:activityId" element={<ActivityDetail />} />
                     </Routes>
                 </main>
             </div>
