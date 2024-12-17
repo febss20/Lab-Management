@@ -207,6 +207,40 @@ button {
   margin-bottom: 20px;
 }
 
+.activity-list .info-btn {
+  margin-right: 10px;
+}
+
+.activity-detail-table {
+  width: 100%;
+  border-radius: 10px;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.activity-detail-table .add-user {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.activity-detail-table .add-equipment {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.activity-detail-table h4 {
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+
+.activity-detail-table .h4-txt {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
 button[type="submit"] {
   background-color: #4299e1;
   margin-right: 10px;
