@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const ActivityList = () => {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   // Fetch activities
   const fetchActivities = async () => {
@@ -64,6 +64,7 @@ const ActivityList = () => {
   const renderActivityRow = (activity) => {
     return editingId === activity._id ? (
       <>
+        {/* Editing Row */}
         <td className="px-4 py-2 border">
           <input
             type="text"
@@ -115,7 +116,7 @@ const ActivityList = () => {
             type="datetime-local"
             value={editData.end_time}
             onChange={e => setEditData({ ...editData, end_time: e.target.value })}
-            className="w-full p-1 border rounded"
+            className="w-full p- 1 border rounded"
           />
         </td>
         <td className="px-4 py-2 border">
@@ -132,6 +133,7 @@ const ActivityList = () => {
         <td className="px-4 py-2 border">{new Date(activity.start_time).toLocaleString()}</td>
         <td className="px-4 py-2 border">{new Date(activity.end_time).toLocaleString()}</td>
         <td className="px-4 py-2 border">
+          <button onClick={() => navigate(`/activity/${activity._id}`)} className="info-btn bg-blue-500 text-white px-2 py-1 rounded">Info</button>
           <button onClick={() => handleEdit(activity)} className="edit-btn">Edit</button>
           <button onClick={() => handleDelete(activity._id)} className="delete-btn">Delete</button>
         </td>
@@ -151,7 +153,7 @@ const ActivityList = () => {
               <th className="px-4 py-2 border">Lab ID</th>
               <th className="px-4 py-2 border">Activity Name</th>
               <th className="px-4 py-2 border">Type</th>
-              <th className="px-4 py-2 border">User  </th>
+              <th className="px-4 py-2 border">User </th>
               <th className="px-4 py-2 border">Start Time</th>
               <th className="px-4 py-2 border">End Time</th>
               <th className="px-4 py-2 border">Actions</th>
@@ -167,7 +169,7 @@ const ActivityList = () => {
             ) : (
               <tr>
                 <td colSpan="7" className="text-center">No activities found.</td>
-              </ tr>
+              </tr>
             )}
           </tbody>
         </table>
