@@ -83,7 +83,7 @@ const EquipmentList = () => {
         {['lab_id', 'last_used', 'first_added', 'last_maintanance'].map((field, index) => (
           <td className="px-4 py-2 border" key={index}>
             <input
-              type={field.includes('used') || field.includes('added') ? 'date' : 'text'}
+              type={field.includes('used') || field.includes('added') || field === 'last_maintanance' ? 'date' : 'text'}
               value={editData[field]}
               onChange={e => setEditData({ ...editData, [field]: e.target.value })}
               className="w-full p-1 border rounded"
